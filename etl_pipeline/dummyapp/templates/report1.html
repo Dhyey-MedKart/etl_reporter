@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Report</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .container {
+            max-width: 90%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h4 {
+            text-align: center;
+            color: #1565C0;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            max-height: 400px; /* Enables vertical scrolling */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            min-width: 150px;
+        }
+        th {
+            background-color: #1565C0;
+            color: white;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+        .no-data {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 20px;
+            color: #777;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            margin: 5px;
+            background-color: #1565C0;
+            border-radius: 6px;
+        }
+        .btn:hover {
+            background-color: #0D47A1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>Report {{ report_id }}</h4>
+        
+        <!-- Upload Section -->
+        <div class="section">
+            <h6>Upload File</h6>
+            <form action="#" method="POST" enctype="multipart/form-data">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Choose File</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload a CSV or Excel file">
+                    </div>
+                </div>
+                <button type="submit" class="btn green">Upload</button>
+            </form>
+        </div>
+        <!-- Report Navigation Buttons -->
+        <div class="btn-container">
+            <a href="{% url 'leads:report1' %}" class="btn waves-effect">Report 1</a>
+            <a href="{% url 'leads:report2' %}" class="btn waves-effect">Report 2</a>
+            <a href="{% url 'leads:report3' %}" class="btn waves-effect">Report 3</a>
+            <a href="{% url 'leads:report4' %}" class="btn waves-effect">Report 4</a>
+            <a href="{% url 'leads:report5' %}" class="btn waves-effect">Report 5</a>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            {% if leads %}
+            <table class="striped">
+                <thead>
+                    <tr>
+                        {% for key in leads.0.keys %}
+                            <th>{{ key|capfirst }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lead in leads %}
+                    <tr>
+                        {% for value in lead.values %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p class="no-data">No leads available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
